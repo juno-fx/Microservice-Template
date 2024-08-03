@@ -1,0 +1,5 @@
+.idea
+.devbox
+venv
+.env
+build.json

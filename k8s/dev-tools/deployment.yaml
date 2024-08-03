@@ -1,0 +1,41 @@
+# Not for production! This is a development tool only.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: repo
+
+  template:
+    metadata:
+      labels:
+        app: repo
+
+    spec:
+      containers:
+        - name: dev-server
+          image: twostoryrobot/simple-file-upload
+          securityContext:
+            # Make sure to set your uid and gid here!
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            - name: KEY_CI
+              value: "/uploads/htmlcov.zip"
+          ports:
+            - containerPort: 3000
+              name: endpoint
+          volumeMounts:
+            - name: repo
+              mountPath: /uploads
+
+      volumes:
+        - name: repo
+          hostPath:
+            path: /app
+            type: Directory

@@ -1,0 +1,20 @@
+# You don't actually need to do this. But if you need to pass in custom
+# environment variables, service accounts or other configurations, you
+# have to do it with a custom Job runner.
+
+# WARNING!!!
+# You can NOT customize volumes or volumeMounts. This is a limitation of Skaffold.
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-runner
+
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: test-runner
+          image: myapp-test

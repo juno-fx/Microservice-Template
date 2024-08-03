@@ -1,0 +1,10 @@
+[paths]
+source =
+	src/
+
+[report]
+omit =
+	tests/*
+skip_covered = True
+skip_empty = True
+fail_under = 90

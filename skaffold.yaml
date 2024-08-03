@@ -1,0 +1,42 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: terra
+
+build:
+  local:
+    push: false
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: myapp
+      docker:
+        dockerfile: Dockerfile
+        target: dev
+    - image: myapp-test
+      docker:
+        dockerfile: Dockerfile
+        target: test
+
+verify:
+  # run integration tests
+  - name: myapp-test
+    timeout: 120
+    container:
+      image: myapp-test
+      name: myapp-test
+    # target run for in the cluster
+    executionMode:
+      kubernetesCluster:
+        jobManifestPath: tests/test_runner.yaml
+
+manifests:
+  rawYaml:
+    - k8s/*
+
+portForward:
+  - resourceType: service
+    resourceName: myapp
+    port: 8000
+    localPort: 8000
+

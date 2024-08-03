@@ -1,0 +1,67 @@
+# Start of standard Deployment spec
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      # Start of Special Juno Innovations configuration
+      containers:
+        - name: myapp
+          image: myapp:latest       # In Skaffold, you want this to always point to
+                                    # "latest" since this is dynamically loaded by
+                                    # Skaffold with the latest build artifact.
+
+          readinessProbe:           # Readiness probe this just determines if the
+                                    # container is ready to serve traffic. We have
+                                    # standard endpoints for this
+            httpGet:
+              path: "/.health"
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 15
+          livenessProbe:            # Liveness probe makes sure the container is
+                                    # still alive.
+            httpGet:
+              path: "/.health"
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 15
+          startupProbe:             # Startup probe is used to issue a grace period
+                                    # for the container to start up. This is useful
+                                    # for containers that take a long time to start up.
+            httpGet:
+              path: "/.health"
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 15
+          ports:
+            - containerPort: 8000
+              name: endpoint
+          volumeMounts:
+            - name: source
+              mountPath: /app       # We are doing an overlay with the local source code
+                                    # on the host machine. The container itself runs code
+                                    # from the image, but we are mounting the source code
+                                    # from the root of your repository. This enables hot
+                                    # reloading directly in the cluster for rapid development.
+      volumes:
+        - name: source
+          hostPath:
+            path: /app
+            type: Directory         # We are mounting the hostPath because the source
+                                    # code is on the host machine which is just a Kind
+                                    # worker Node. You can see how this works by
+                                    # referencing the .kind.yaml.
