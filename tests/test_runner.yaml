@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-runner
+
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: kuiper
+      containers:
+        - name: test-runner
+          image: kuiper-test
+          env:
+            - name: REGISTRY
+              value: registry.hatfieldfx.com

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.12.0/.schema/devbox.schema.json",
+  "packages": [
+    "skaffold@latest",
+    "kind@latest",
+    "kubectl@latest",
+    "docker@latest",
+    "gnumake@latest",
+    "python-full@3.12"
+  ],
+  "env": {
+    "VENV_DIR": "venv"
+  },
+  "shell": {
+    "init_hook": [
+      ". $VENV_DIR/bin/activate",
+      "uv --version || pip install uv",
+      "uv pip install -r requirements.txt",
+      "uv pip install -r dev-requirements.txt",
+    ]
+  }
+}
