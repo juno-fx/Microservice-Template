@@ -118,6 +118,22 @@ We also can test 3 critical use cases:
 
 This allows us to verify an entire microservice in a real environment and hit it from every possible angle.
 
+#### Running Tests
+
+To run tests, simply run the following command:
+
+```bash
+make local-test
+```
+
+#### Checking Coverage
+
+To check coverage, simply run the following command:
+
+```bash
+make open-coverage
+```
+
 ## Real World Example
 
 Let's take a look at how we test one of our core microservices, `Luna`.
@@ -185,3 +201,7 @@ The above graph seems complex, but we are actually testing 3 major use cases for
 
 All 3 of these test environments would be difficult to test and mock if we didn't have the ability to launch a real
 instance of `Luna` in our testing environment and leverage a fully functional and self-contained cluster environment.
+
+<br/><br/>
+
+## CI/CD (coming soon, we use it internally, I am just too tired to keep typing)

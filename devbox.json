@@ -6,10 +6,10 @@
     "kubectl@latest",
     "docker@latest",
     "gnumake@latest",
-    "python-full@3.12"
+    "python-full@3.12",
   ],
   "env": {
-    "VENV_DIR": "venv"
+    "VENV_DIR": "venv",
   },
   "shell": {
     "init_hook": [
@@ -17,6 +17,6 @@
       "uv --version || pip install uv",
       "uv pip install -r requirements.txt",
       "uv pip install -r dev-requirements.txt",
-    ]
-  }
+    ],
+  },
 }
