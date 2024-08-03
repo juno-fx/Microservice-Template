@@ -2,3 +2,4 @@
 .devbox
 venv
 .env
+build.json

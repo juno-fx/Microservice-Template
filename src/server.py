@@ -28,7 +28,7 @@ app = FastAPI(
     redoc_url=None,
 )
 
-header(LOGGER, version, "Mercury")
+header(LOGGER, version, "Juno Service")
 
 app.include_router(utils)
 
