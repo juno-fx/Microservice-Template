@@ -89,6 +89,26 @@ cluster. Now we need to setup our microservice. Instead of writing about it, we 
 - [Deployment](/k8s/myapp/deployment.yaml).
 - [Service](/k8s/myapp/service.yaml).
 
+
+
+<br/><br/>
+
+## QC
+
+We ship with [ruff](https://github.com/astral-sh/ruff). This handles our code quality checks. 
+
+#### Linting
+
+```bash
+make lint
+```
+
+#### Formatting
+
+```bash
+make format
+```
+
 <br/><br/>
 
 ## Testing
